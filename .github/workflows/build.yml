@@ -1,0 +1,36 @@
+name: Build site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/**.md"
+      - "build.py"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Regenerate index.html
+        run: python build.py
+
+      - name: Commit updated index.html
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git diff --quiet index.html || (
+            git add index.html &&
+            git commit -m "chore: rebuild site [skip ci]"
+          )
+
+      - name: Push
+        run: git push
