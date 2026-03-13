@@ -77,6 +77,31 @@
 
     header .affiliation a:hover { text-decoration: underline; }
 
+    /* ── Logos ── */
+    .header-logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .logo-simlab {
+      width: 80px;
+      height: 80px;
+      border-radius: 18px;
+      object-fit: cover;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .logo-hevs {
+      height: 36px;
+      width: auto;
+      opacity: 0.9;
+      filter: brightness(0) invert(1);
+    }
+
     /* ── Layout ── */
     main {
       max-width: 1080px;
@@ -304,6 +329,8 @@
 
     .proj-link:hover { text-decoration: underline; }
 
+    .proj-link-sep { color: var(--border); }
+
     /* ── Collaborators grid ── */
     .collab-grid {
       display: grid;
@@ -368,7 +395,10 @@
 <body>
 
 <header>
-  <div class="logo">SIMLab</div>
+  <div class="header-logos">
+    <img src="assets/logo-simlab.png" alt="SIMLab" class="logo-simlab" />
+    <img src="assets/logo-hevs.svg" alt="HES-SO Valais-Wallis" class="logo-hevs" />
+  </div>
   <h1>Scientific and Industrial<br><span>Machine Learning</span> Laboratory</h1>
   <p class="tagline">
     Developing and applying machine learning techniques to solve complex real-world problems.
@@ -487,71 +517,121 @@
     <div class="proj-list">
       <div class="proj-card">
         <div class="proj-header">
-          <h3>AgIPEE – Agentic AI for Industrial Process Energy Efficiency</h3>
-          <div class="badges"><span class="badge" style="background:#fef3c7;color:#92400e">Innosuisse</span><span class="badge badge-status ongoing">ongoing</span></div>
-        </div>
-        <div class="proj-meta"><span>2024–2026</span> · <span class="partners">HES-SO Valais, Industrial partner (TBD)</span></div>
-        <p class="proj-desc">Research project developing AI-powered tools to model, monitor, and optimise energy consumption in industrial processes. The project also produced Agipee, an open-source research-project management platform used internally by the lab.</p>
-        <a class="proj-link" href="https://github.com/simlab-vs/agipee" target="_blank" rel="noopener">View on GitHub →</a>
-      </div>
-      <div class="proj-card">
-        <div class="proj-header">
-          <h3>Drivers of Tree Growth Across Europe (ICP Forests XAI)</h3>
-          <div class="badges"><span class="badge" style="background:#f3e8ff;color:#6b21a8">HES-SO</span><span class="badge badge-status completed">completed</span></div>
-        </div>
-        <div class="proj-meta"><span>2022–2024</span> · <span class="partners">ICP Forests Level II network</span></div>
-        <p class="proj-desc">Explainable AI analysis of annual diameter growth for four dominant European tree species (Norway spruce, Scots pine, common beech, oaks) using long-term ICP Forests data. Gradient-boosted models combined with SHAP values to disentangle climatic, edaphic, and biotic drivers of forest health under climate change.</p>
-        <a class="proj-link" href="https://github.com/simlab-vs/icp-forest-xai" target="_blank" rel="noopener">View on GitHub →</a>
-      </div>
-      <div class="proj-card">
-        <div class="proj-header">
-          <h3>Jaxifer – Groundwater Level Forecasting</h3>
-          <div class="badges"><span class="badge" style="background:#d1fae5;color:#065f46">SNSF</span><span class="badge badge-status ongoing">ongoing</span></div>
-        </div>
-        <div class="proj-meta"><span>2023–2025</span> · <span class="partners">HES-SO Valais, Canton du Valais</span></div>
-        <p class="proj-desc">A JAX-based framework for 5-day groundwater level prediction from meteorological and weather forecast data. Uses differentiable hybrid models combining physics-based priors with data-driven components, enabling uncertainty-aware forecasts at regional scale.</p>
-        <a class="proj-link" href="https://github.com/simlab-vs/jaxifer" target="_blank" rel="noopener">View on GitHub →</a>
-      </div>
-      <div class="proj-card">
-        <div class="proj-header">
-          <h3>TrunkX – Forest Carbon Stock Monitoring</h3>
+          <h3>AI4SWEng – AI-Driven Software Engineering</h3>
           <div class="badges"><span class="badge" style="background:#dbeafe;color:#1d4ed8">Horizon</span><span class="badge badge-status ongoing">ongoing</span></div>
         </div>
-        <div class="proj-meta"><span>2024–2027</span> · <span class="partners">ICOS consortium, Swiss Federal Institute for Forest, Snow and Landscape Research (WSL)</span></div>
-        <p class="proj-desc">Automated ingestion and analysis of ICOS eddy-covariance flux data to monitor carbon stocks and ecosystem dynamics in European forests. Combines time-series modelling with differentiable dynamical-system methods for continuous, high-resolution carbon accounting.</p>
-        <a class="proj-link" href="https://github.com/simlab-vs/trunx" target="_blank" rel="noopener">View on GitHub →</a>
+        <div class="proj-meta"><span>2025–2028</span></div>
+        <p class="proj-desc">European research project investigating how large language models and AI agents can assist and automate software engineering tasks, from requirements analysis and code generation to testing and maintenance. SIMLab contributes expertise in hybrid modelling and uncertainty quantification for AI-assisted development pipelines.</p>
+        <a class="proj-link" href="https://ai4sweng.eu/" target="_blank" rel="noopener">Project website →</a>
+      </div>
+      <div class="proj-card">
+        <div class="proj-header">
+          <h3>TrunX – Domain-Informed Tree Growth and Mortality Modelling</h3>
+          <div class="badges"><span class="badge" style="background:#d1fae5;color:#065f46">SNSF</span><span class="badge badge-status ongoing">ongoing</span></div>
+        </div>
+        <div class="proj-meta"><span>2026</span></div>
+        <p class="proj-desc">SNSF Spark project developing domain-informed system-dynamics models of tree growth and mortality under changing climatic conditions. Combines differentiable mechanistic representations of carbon allocation and hydraulic failure with observational data to produce interpretable, uncertainty-aware forecasts of forest dynamics.</p>
+        <a class="proj-link" href="https://github.com/simlab-vs/trunx" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+      <div class="proj-card">
+        <div class="proj-header">
+          <h3>CAPIA – AI-Based Cutting Tool Precision Control</h3>
+          <div class="badges"><span class="badge" style="background:#fef3c7;color:#92400e">Innosuisse</span><span class="badge badge-status ongoing">ongoing</span></div>
+        </div>
+        <div class="proj-meta"><span>2026–2027</span> · <span class="partners">Eskenazi SA</span></div>
+        <p class="proj-desc">Contrôle Autonome de la Précision des outils de coupe par Intelligence Artificielle. Innosuisse project with Eskenazi SA developing real-time machine-learning models for in-process monitoring and automatic correction of cutting-tool precision, reducing scrap rates and improving surface quality in high-precision machining.</p>
+        <a class="proj-link" href="https://www.eskenazi.ch" target="_blank" rel="noopener">Project website →</a>
+      </div>
+      <div class="proj-card">
+        <div class="proj-header">
+          <h3>JAXifer – Groundwater Level Forecasting</h3>
+          <div class="badges"><span class="badge" style="background:#f3f4f6;color:#374151">Etat du Valais</span><span class="badge badge-status ongoing">ongoing</span></div>
+        </div>
+        <div class="proj-meta"><span>2023–2025</span></div>
+        <p class="proj-desc">A JAX-based framework for 5-day groundwater level prediction from meteorological and weather forecast data. Uses differentiable hybrid models combining physics-based priors with data-driven components, enabling uncertainty-aware forecasts at regional scale.</p>
+        <a class="proj-link" href="https://github.com/simlab-vs/jaxifer" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+      <div class="proj-card">
+        <div class="proj-header">
+          <h3>Sovereign Spearphishing Detection</h3>
+          <div class="badges"><span class="badge" style="background:#fef3c7;color:#92400e">Innosuisse</span><span class="badge badge-status ongoing">ongoing</span></div>
+        </div>
+        <div class="proj-meta"><span>2026–2027</span> · <span class="partners">Infomaniak</span></div>
+        <p class="proj-desc">Innosuisse project with Infomaniak developing a sovereign, open-source solution for automated spearphishing detection. The system combines large language models with behavioural analysis to identify highly targeted email attacks without relying on third-party cloud infrastructure, addressing privacy and data-sovereignty requirements for Swiss organisations.</p>
+        
+      </div>
+      <div class="proj-card">
+        <div class="proj-header">
+          <h3>ML4HYDRO – Machine Learning for Hydroelectric Turbine Simulations</h3>
+          <div class="badges"><span class="badge" style="background:#f3e8ff;color:#6b21a8">HES-SO</span><span class="badge badge-status ongoing">ongoing</span></div>
+        </div>
+        <div class="proj-meta"><span>2026</span></div>
+        <p class="proj-desc">Domain-informed machine learning for the simulation of hydroelectric turbines. The project develops physics-constrained surrogate models that accurately replicate high-fidelity CFD simulations at a fraction of the computational cost, enabling rapid turbine optimisation and digital-twin applications for Swiss hydropower operators.</p>
+        
       </div>
     </div>
   </section>
     <!-- END:projects -->
 
     <!-- BEGIN:collaborators -->
-  <section class="db-section" id="collaborators">
-    <div class="section-label">Network</div>
-    <h2>Collaborators</h2>
+  <section class="db-section" id="team">
+    <div class="section-label">People</div>
+    <h2>Team</h2>
     <div class="collab-grid">
       <div class="collab-card">
-        <div class="collab-avatar">BG</div>
+        <div class="collab-avatar">GM</div>
         <div class="collab-body">
-          <h3><a href="https://www.hevs.ch" target="_blank" rel="noopener">Benoît Guillod</a></h3>
-          <div class="collab-subtitle">Senior Researcher · HES-SO Valais</div>
-          <p class="collab-bio">Benoît works on climate-impact modelling and regional hydrology, with a focus on probabilistic forecasting of extreme weather events. He brings expertise in large-ensemble climate simulations and their integration into machine learning pipelines.</p>
+          <h3><a href="https://gregorymermoud.ch" target="_blank" rel="noopener">Prof. Dr. Gregory Mermoud</a></h3>
+          <div class="collab-subtitle">Director</div>
+          
         </div>
       </div>
       <div class="collab-card">
-        <div class="collab-avatar">SL</div>
+        <div class="collab-avatar">CT</div>
         <div class="collab-body">
-          <h3><a href="https://www.lobry.xyz" target="_blank" rel="noopener">Sylvain Lobry</a></h3>
-          <div class="collab-subtitle">Associate Professor · Université Paris Cité</div>
-          <p class="collab-bio">Sylvain is an expert in deep learning for remote sensing and geospatial data. His research spans semantic segmentation of satellite imagery and self-supervised representation learning for environmental monitoring applications.</p>
+          <h3><a href="https://cedrictravelletti.github.io/" target="_blank" rel="noopener">Dr. Cedric Travelletti</a></h3>
+          <div class="collab-subtitle">Senior Scientist</div>
+          
         </div>
       </div>
       <div class="collab-card">
-        <div class="collab-avatar">TP</div>
+        <div class="collab-avatar">GG</div>
         <div class="collab-body">
-          <h3><a href="https://tpiccardi.github.io" target="_blank" rel="noopener">Tiziano Piccardi</a></h3>
-          <div class="collab-subtitle">Assistant Professor · EPFL</div>
-          <p class="collab-bio">Tiziano&#x27;s research sits at the intersection of human-computer interaction and machine learning, with a particular interest in understanding how people interact with AI systems and how to design better tools for knowledge workers.</p>
+          <h3>Glory Givi</h3>
+          <div class="collab-subtitle">Postdoc</div>
+          
+        </div>
+      </div>
+      <div class="collab-card">
+        <div class="collab-avatar">MG</div>
+        <div class="collab-body">
+          <h3>Marc Gillioz</h3>
+          <div class="collab-subtitle">Scientist</div>
+          
+        </div>
+      </div>
+      <div class="collab-card">
+        <div class="collab-avatar">AV</div>
+        <div class="collab-body">
+          <h3>Alexandre Veuthey</h3>
+          <div class="collab-subtitle">Research Engineer</div>
+          
+        </div>
+      </div>
+      <div class="collab-card">
+        <div class="collab-avatar">MR</div>
+        <div class="collab-body">
+          <h3>Marta Rende</h3>
+          <div class="collab-subtitle">Assistant</div>
+          
+        </div>
+      </div>
+      <div class="collab-card">
+        <div class="collab-avatar">DO</div>
+        <div class="collab-body">
+          <h3>Dion Osmani</h3>
+          <div class="collab-subtitle">Assistant</div>
+          
         </div>
       </div>
     </div>

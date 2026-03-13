@@ -31,6 +31,7 @@ class Project:
     funding: str = ""
     period: str = ""
     partners: str = ""
+    website: str = ""
     github: str = ""
     status: str = ""
     description: str = ""
@@ -39,6 +40,7 @@ class Project:
 @dataclass
 class Collaborator:
     name: str
+    role: str = ""
     title: str = ""
     affiliation: str = ""
     website: str = ""
@@ -48,8 +50,8 @@ class Collaborator:
 
 # ── Parser ───────────────────────────────────────────────────────────────────
 
-_KNOWN_FIELDS = {"funding", "period", "partners", "github", "status",
-                 "title", "affiliation", "website", "email"}
+_KNOWN_FIELDS = {"funding", "period", "partners", "website", "github", "status",
+                 "role", "title", "affiliation", "email"}
 
 def _parse_entries(text: str) -> list[dict]:
     """
@@ -98,6 +100,7 @@ def parse_projects(path: Path) -> list[Project]:
             funding=e.get("funding", ""),
             period=e.get("period", ""),
             partners=e.get("partners", ""),
+            website=e.get("website", ""),
             github=e.get("github", ""),
             status=e.get("status", ""),
             description=e.get("body", ""),
@@ -111,6 +114,7 @@ def parse_collaborators(path: Path) -> list[Collaborator]:
     for e in entries:
         collaborators.append(Collaborator(
             name=e["heading"],
+            role=e.get("role", ""),
             title=e.get("title", ""),
             affiliation=e.get("affiliation", ""),
             website=e.get("website", ""),
@@ -166,12 +170,18 @@ def render_projects(projects: list[Project]) -> str:
             )
         meta = f'<div class="proj-meta">{" · ".join(meta_parts)}</div>' if meta_parts else ""
 
-        github_link = ""
-        if p.github:
-            github_link = (
-                f'<a class="proj-link" href="{html.escape(p.github)}" '
-                f'target="_blank" rel="noopener">View on GitHub →</a>'
+        links = []
+        if p.website:
+            links.append(
+                f'<a class="proj-link" href="{html.escape(p.website)}" '
+                f'target="_blank" rel="noopener">Project website →</a>'
             )
+        if p.github:
+            links.append(
+                f'<a class="proj-link" href="{html.escape(p.github)}" '
+                f'target="_blank" rel="noopener">GitHub →</a>'
+            )
+        github_link = ' <span class="proj-link-sep">·</span> '.join(links)
 
         desc = f'<p class="proj-desc">{html.escape(p.description)}</p>' if p.description else ""
 
@@ -197,21 +207,21 @@ def render_collaborators(collaborators: list[Collaborator]) -> str:
     for c in collaborators:
         initials = "".join(w[0].upper() for w in c.name.split()[:2])
 
-        subtitle_parts = []
-        if c.title:
-            subtitle_parts.append(html.escape(c.title))
-        if c.affiliation:
-            subtitle_parts.append(html.escape(c.affiliation))
-        subtitle = " · ".join(subtitle_parts)
-
-        name_tag = c.name
+        display_name = f"{c.title} {c.name}".strip() if c.title else c.name
         if c.website:
             name_tag = (
                 f'<a href="{html.escape(c.website)}" '
-                f'target="_blank" rel="noopener">{html.escape(c.name)}</a>'
+                f'target="_blank" rel="noopener">{html.escape(display_name)}</a>'
             )
         else:
-            name_tag = html.escape(c.name)
+            name_tag = html.escape(display_name)
+
+        subtitle_parts = []
+        if c.role:
+            subtitle_parts.append(html.escape(c.role))
+        if c.affiliation:
+            subtitle_parts.append(html.escape(c.affiliation))
+        subtitle = " · ".join(subtitle_parts)
 
         bio = f'<p class="collab-bio">{html.escape(c.bio)}</p>' if c.bio else ""
 
@@ -240,9 +250,9 @@ _PROJECTS_SECTION = """\
   </section>"""
 
 _COLLABORATORS_SECTION = """\
-  <section class="db-section" id="collaborators">
-    <div class="section-label">Network</div>
-    <h2>Collaborators</h2>
+  <section class="db-section" id="team">
+    <div class="section-label">People</div>
+    <h2>Team</h2>
     <div class="collab-grid">
 {cards}
     </div>
