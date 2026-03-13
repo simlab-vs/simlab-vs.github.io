@@ -61,17 +61,20 @@ One or two sentences of bio.
 
 ## Rebuilding locally
 
-Requires Python 3.8+ (no third-party packages).
+Requires [uv](https://docs.astral.sh/uv/). No other dependencies.
 
 ```bash
+# First time: create the virtual environment
+uv sync
+
 # Rebuild index.html in-place
-python build.py
+uv run build.py
 
 # Preview generated HTML without touching index.html
-python build.py --check
+uv run build.py --check
 
 # Use a different data directory or output file
-python build.py --data path/to/data --output path/to/index.html
+uv run build.py --data path/to/data --output path/to/index.html
 ```
 
 ## Publishing
