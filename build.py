@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 """
-build.py – Parse data/projects.md and data/collaborators.md, generate HTML
+build.py – Parse data/team/ and data/projects/ directories, generate HTML
 sections, and inject them into index.html between marker comments.
+
+Each person has their own file under data/team/<name>.md.
+Each project has its own file under data/projects/<name>.md.
+Files are processed in alphabetical order; prefix with numbers (01-, 02-, …)
+to control display order.
 
 Markers expected in index.html:
     <!-- BEGIN:projects -->  ...  <!-- END:projects -->
@@ -19,7 +24,7 @@ import argparse
 import html
 import re
 import sys
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 
 
@@ -45,13 +50,17 @@ class Collaborator:
     affiliation: str = ""
     website: str = ""
     email: str = ""
+    picture: str = ""
+    interests: str = ""
     bio: str = ""
 
 
 # ── Parser ───────────────────────────────────────────────────────────────────
 
-_KNOWN_FIELDS = {"funding", "period", "partners", "website", "github", "status",
-                 "role", "title", "affiliation", "email"}
+_KNOWN_FIELDS = {
+    "funding", "period", "partners", "website", "github", "status",
+    "role", "title", "affiliation", "email", "picture", "interests",
+}
 
 def _parse_entries(text: str) -> list[dict]:
     """
@@ -91,11 +100,18 @@ def _parse_entries(text: str) -> list[dict]:
     return entries
 
 
-def parse_projects(path: Path) -> list[Project]:
-    entries = _parse_entries(path.read_text())
-    projects = []
-    for e in entries:
-        projects.append(Project(
+def _parse_md_files(dir_path: Path) -> list[dict]:
+    """Read all *.md files from a directory (sorted by name) and parse entries."""
+    entries = []
+    for f in sorted(dir_path.glob("*.md")):
+        entries.extend(_parse_entries(f.read_text()))
+    return entries
+
+
+def parse_projects(source: Path) -> list[Project]:
+    entries = _parse_md_files(source) if source.is_dir() else _parse_entries(source.read_text())
+    return [
+        Project(
             title=e["heading"],
             funding=e.get("funding", ""),
             period=e.get("period", ""),
@@ -104,24 +120,27 @@ def parse_projects(path: Path) -> list[Project]:
             github=e.get("github", ""),
             status=e.get("status", ""),
             description=e.get("body", ""),
-        ))
-    return projects
+        )
+        for e in entries
+    ]
 
 
-def parse_collaborators(path: Path) -> list[Collaborator]:
-    entries = _parse_entries(path.read_text())
-    collaborators = []
-    for e in entries:
-        collaborators.append(Collaborator(
+def parse_collaborators(source: Path) -> list[Collaborator]:
+    entries = _parse_md_files(source) if source.is_dir() else _parse_entries(source.read_text())
+    return [
+        Collaborator(
             name=e["heading"],
             role=e.get("role", ""),
             title=e.get("title", ""),
             affiliation=e.get("affiliation", ""),
             website=e.get("website", ""),
             email=e.get("email", ""),
+            picture=e.get("picture", ""),
+            interests=e.get("interests", ""),
             bio=e.get("body", ""),
-        ))
-    return collaborators
+        )
+        for e in entries
+    ]
 
 
 # ── HTML generators ───────────────────────────────────────────────────────────
@@ -181,7 +200,7 @@ def render_projects(projects: list[Project]) -> str:
                 f'<a class="proj-link" href="{html.escape(p.github)}" '
                 f'target="_blank" rel="noopener">GitHub →</a>'
             )
-        github_link = ' <span class="proj-link-sep">·</span> '.join(links)
+        links_html = ' <span class="proj-link-sep">·</span> '.join(links)
 
         desc = f'<p class="proj-desc">{html.escape(p.description)}</p>' if p.description else ""
 
@@ -193,7 +212,7 @@ def render_projects(projects: list[Project]) -> str:
         </div>
         {meta}
         {desc}
-        {github_link}
+        {links_html}
       </div>""")
 
     return "\n".join(cards)
@@ -205,7 +224,16 @@ def render_collaborators(collaborators: list[Collaborator]) -> str:
 
     cards = []
     for c in collaborators:
-        initials = "".join(w[0].upper() for w in c.name.split()[:2])
+        # Avatar: photo if available, otherwise coloured initials
+        if c.picture:
+            initials = "".join(w[0].upper() for w in c.name.split()[:2])
+            avatar = (
+                f'<img class="collab-photo" src="{html.escape(c.picture)}" '
+                f'alt="{html.escape(initials)}" />'
+            )
+        else:
+            initials = "".join(w[0].upper() for w in c.name.split()[:2])
+            avatar = f'<div class="collab-avatar">{initials}</div>'
 
         display_name = f"{c.title} {c.name}".strip() if c.title else c.name
         if c.website:
@@ -221,16 +249,29 @@ def render_collaborators(collaborators: list[Collaborator]) -> str:
             subtitle_parts.append(html.escape(c.role))
         if c.affiliation:
             subtitle_parts.append(html.escape(c.affiliation))
-        subtitle = " · ".join(subtitle_parts)
+        subtitle = (
+            f'<div class="collab-subtitle">{" · ".join(subtitle_parts)}</div>'
+            if subtitle_parts else ""
+        )
+
+        if c.interests:
+            tags = "".join(
+                f'<span class="interest-tag">{html.escape(t.strip())}</span>'
+                for t in c.interests.split(",") if t.strip()
+            )
+            interests_html = f'<div class="collab-interests">{tags}</div>'
+        else:
+            interests_html = ""
 
         bio = f'<p class="collab-bio">{html.escape(c.bio)}</p>' if c.bio else ""
 
         cards.append(f"""\
       <div class="collab-card">
-        <div class="collab-avatar">{initials}</div>
+        {avatar}
         <div class="collab-body">
           <h3>{name_tag}</h3>
-          {f'<div class="collab-subtitle">{subtitle}</div>' if subtitle else ""}
+          {subtitle}
+          {interests_html}
           {bio}
         </div>
       </div>""")
@@ -291,21 +332,29 @@ def main() -> None:
     ap.add_argument("--check", action="store_true",
                     help="Print generated HTML without modifying index.html")
     ap.add_argument("--data", default="data",
-                    help="Directory containing projects.md and collaborators.md (default: data/)")
+                    help="Directory containing team/ and projects/ subdirs (default: data/)")
     ap.add_argument("--output", default="index.html",
                     help="HTML file to update in-place (default: index.html)")
     args = ap.parse_args()
 
     data_dir = Path(args.data)
-    projects_path = data_dir / "projects.md"
-    collaborators_path = data_dir / "collaborators.md"
 
-    for p in (projects_path, collaborators_path):
-        if not p.exists():
-            sys.exit(f"[build] Error: {p} not found")
+    # Resolve team source: prefer data/team/ dir, fall back to data/collaborators.md
+    team_source = data_dir / "team"
+    if not team_source.is_dir():
+        team_source = data_dir / "collaborators.md"
+        if not team_source.exists():
+            sys.exit(f"[build] Error: neither {data_dir / 'team'} nor {data_dir / 'collaborators.md'} found")
 
-    projects = parse_projects(projects_path)
-    collaborators = parse_collaborators(collaborators_path)
+    # Resolve projects source: prefer data/projects/ dir, fall back to data/projects.md
+    projects_source = data_dir / "projects"
+    if not projects_source.is_dir():
+        projects_source = data_dir / "projects.md"
+        if not projects_source.exists():
+            sys.exit(f"[build] Error: neither {data_dir / 'projects'} nor {data_dir / 'projects.md'} found")
+
+    collaborators = parse_collaborators(team_source)
+    projects = parse_projects(projects_source)
 
     proj_html = build_projects_html(projects)
     collab_html = build_collaborators_html(collaborators)

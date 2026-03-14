@@ -331,7 +331,7 @@
     /* ── Collaborators grid ── */
     .collab-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 1.25rem;
       margin-top: 1.75rem;
     }
@@ -342,7 +342,7 @@
       border-radius: 12px;
       padding: 1.5rem;
       display: flex;
-      gap: 1rem;
+      gap: 1.1rem;
       align-items: flex-start;
       transition: box-shadow 0.2s;
     }
@@ -350,17 +350,30 @@
     .collab-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.07); }
 
     .collab-avatar {
-      width: 44px;
-      height: 44px;
+      width: 64px;
+      height: 64px;
       border-radius: 50%;
       background: linear-gradient(135deg, #2563eb, #7c3aed);
       color: #fff;
-      font-size: 0.85rem;
+      font-size: 1rem;
       font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+    }
+
+    .collab-photo {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 2px solid var(--border);
+    }
+
+    .collab-body {
+      min-width: 0;
     }
 
     .collab-body h3 {
@@ -379,7 +392,23 @@
     .collab-subtitle {
       font-size: 0.8rem;
       color: var(--muted);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .collab-interests {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .interest-tag {
+      font-size: 0.71rem;
+      font-weight: 500;
+      background: var(--accent-light);
+      color: var(--accent);
+      padding: 0.15rem 0.55rem;
+      border-radius: 99px;
     }
 
     .collab-bio {
@@ -523,15 +552,6 @@
       </div>
       <div class="proj-card">
         <div class="proj-header">
-          <h3>TrunX – Domain-Informed Tree Growth and Mortality Modelling</h3>
-          <div class="badges"><span class="badge" style="background:#d1fae5;color:#065f46">SNSF</span><span class="badge badge-status ongoing">ongoing</span></div>
-        </div>
-        <div class="proj-meta"><span>2026</span></div>
-        <p class="proj-desc">SNSF Spark project developing domain-informed system-dynamics models of tree growth and mortality under changing climatic conditions. Combines differentiable mechanistic representations of carbon allocation and hydraulic failure with observational data to produce interpretable, uncertainty-aware forecasts of forest dynamics.</p>
-        <a class="proj-link" href="https://github.com/simlab-vs/trunx" target="_blank" rel="noopener">GitHub →</a>
-      </div>
-      <div class="proj-card">
-        <div class="proj-header">
           <h3>CAPIA – AI-Based Cutting Tool Precision Control</h3>
           <div class="badges"><span class="badge" style="background:#fef3c7;color:#92400e">Innosuisse</span><span class="badge badge-status ongoing">ongoing</span></div>
         </div>
@@ -550,6 +570,15 @@
       </div>
       <div class="proj-card">
         <div class="proj-header">
+          <h3>ML4HYDRO – Machine Learning for Hydroelectric Turbine Simulations</h3>
+          <div class="badges"><span class="badge" style="background:#f3e8ff;color:#6b21a8">HES-SO</span><span class="badge badge-status ongoing">ongoing</span></div>
+        </div>
+        <div class="proj-meta"><span>2026</span></div>
+        <p class="proj-desc">Domain-informed machine learning for the simulation of hydroelectric turbines. The project develops physics-constrained surrogate models that accurately replicate high-fidelity CFD simulations at a fraction of the computational cost, enabling rapid turbine optimisation and digital-twin applications for Swiss hydropower operators.</p>
+        
+      </div>
+      <div class="proj-card">
+        <div class="proj-header">
           <h3>Sovereign Spearphishing Detection</h3>
           <div class="badges"><span class="badge" style="background:#fef3c7;color:#92400e">Innosuisse</span><span class="badge badge-status ongoing">ongoing</span></div>
         </div>
@@ -559,12 +588,12 @@
       </div>
       <div class="proj-card">
         <div class="proj-header">
-          <h3>ML4HYDRO – Machine Learning for Hydroelectric Turbine Simulations</h3>
-          <div class="badges"><span class="badge" style="background:#f3e8ff;color:#6b21a8">HES-SO</span><span class="badge badge-status ongoing">ongoing</span></div>
+          <h3>TrunX – Domain-Informed Tree Growth and Mortality Modelling</h3>
+          <div class="badges"><span class="badge" style="background:#d1fae5;color:#065f46">SNSF</span><span class="badge badge-status ongoing">ongoing</span></div>
         </div>
         <div class="proj-meta"><span>2026</span></div>
-        <p class="proj-desc">Domain-informed machine learning for the simulation of hydroelectric turbines. The project develops physics-constrained surrogate models that accurately replicate high-fidelity CFD simulations at a fraction of the computational cost, enabling rapid turbine optimisation and digital-twin applications for Swiss hydropower operators.</p>
-        
+        <p class="proj-desc">SNSF Spark project developing domain-informed system-dynamics models of tree growth and mortality under changing climatic conditions. Combines differentiable mechanistic representations of carbon allocation and hydraulic failure with observational data to produce interpretable, uncertainty-aware forecasts of forest dynamics.</p>
+        <a class="proj-link" href="https://github.com/simlab-vs/trunx" target="_blank" rel="noopener">GitHub →</a>
       </div>
     </div>
   </section>
@@ -580,7 +609,8 @@
         <div class="collab-body">
           <h3><a href="https://gregorymermoud.ch" target="_blank" rel="noopener">Prof. Dr. Gregory Mermoud</a></h3>
           <div class="collab-subtitle">Director</div>
-          
+          <div class="collab-interests"><span class="interest-tag">Hybrid Modeling</span><span class="interest-tag">Differential Programming</span><span class="interest-tag">Uncertainty Quantification</span><span class="interest-tag">Dynamical Systems</span></div>
+          <p class="collab-bio">Gregory Mermoud is a professor at HES-SO Valais-Wallis and director of SIMLab. His research focuses on the intersection of physics-based modeling and machine learning, with an emphasis on developing interpretable and uncertainty-aware models for real-world engineering problems.</p>
         </div>
       </div>
       <div class="collab-card">
@@ -588,7 +618,8 @@
         <div class="collab-body">
           <h3><a href="https://cedrictravelletti.github.io/" target="_blank" rel="noopener">Dr. Cedric Travelletti</a></h3>
           <div class="collab-subtitle">Senior Scientist</div>
-          
+          <div class="collab-interests"><span class="interest-tag">Gaussian Processes</span><span class="interest-tag">Spatial Statistics</span><span class="interest-tag">Inverse Problems</span><span class="interest-tag">Geosciences</span></div>
+          <p class="collab-bio">Cedric Travelletti is a senior scientist at SIMLab specialising in probabilistic machine learning and spatial statistics. His work addresses inverse problems in geosciences, with a focus on scalable Gaussian process methods and uncertainty quantification for large-scale environmental applications.</p>
         </div>
       </div>
       <div class="collab-card">
@@ -596,6 +627,7 @@
         <div class="collab-body">
           <h3>Glory Givi</h3>
           <div class="collab-subtitle">Postdoc</div>
+          <div class="collab-interests"><span class="interest-tag">Machine Learning</span><span class="interest-tag">Explainable AI</span><span class="interest-tag">Scientific Computing</span></div>
           
         </div>
       </div>
@@ -604,6 +636,7 @@
         <div class="collab-body">
           <h3>Marc Gillioz</h3>
           <div class="collab-subtitle">Scientist</div>
+          <div class="collab-interests"><span class="interest-tag">Deep Learning</span><span class="interest-tag">Time Series</span><span class="interest-tag">Industrial Applications</span></div>
           
         </div>
       </div>
@@ -612,6 +645,7 @@
         <div class="collab-body">
           <h3>Alexandre Veuthey</h3>
           <div class="collab-subtitle">Research Engineer</div>
+          <div class="collab-interests"><span class="interest-tag">Software Engineering</span><span class="interest-tag">MLOps</span><span class="interest-tag">Differentiable Programming</span></div>
           
         </div>
       </div>
@@ -621,6 +655,7 @@
           <h3>Marta Rende</h3>
           <div class="collab-subtitle">Assistant</div>
           
+          
         </div>
       </div>
       <div class="collab-card">
@@ -628,6 +663,7 @@
         <div class="collab-body">
           <h3>Dion Osmani</h3>
           <div class="collab-subtitle">Assistant</div>
+          
           
         </div>
       </div>

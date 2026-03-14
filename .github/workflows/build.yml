@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "data/**.md"
+      - "assets/team/**"
       - "build.py"
 
 jobs:
