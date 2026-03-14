@@ -1,3 +1,3 @@
 ## Alexandre Veuthey
 role: Research Engineer
-interests: Software Engineering, MLOps, Differentiable Programming
+interests: Machine Learning, Computer Vision
