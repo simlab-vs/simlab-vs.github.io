@@ -1,18 +1,17 @@
 name: Build site
 
 on:
-  push:
+  pull_request:
     branches: [main]
     paths:
       - "data/**.md"
       - "assets/team/**"
       - "build.py"
+      - "index.html"
 
 jobs:
-  build:
+  check:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
       - uses: actions/checkout@v4
@@ -22,14 +21,9 @@ jobs:
       - name: Regenerate index.html
         run: uv run build.py
 
-      - name: Commit updated index.html
+      - name: Verify index.html is up-to-date
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git diff --quiet index.html || (
-            git add index.html &&
-            git commit -m "chore: rebuild site [skip ci]"
+          git diff --exit-code index.html || (
+            echo "index.html is out of date. Run 'python build.py' locally and include the result in your PR."
+            exit 1
           )
-
-      - name: Push
-        run: git push
