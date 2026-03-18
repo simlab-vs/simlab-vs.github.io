@@ -79,20 +79,18 @@ uv run build.py --data path/to/data --output path/to/index.html
 
 ## Publishing
 
-All changes go through a pull request. The CI checks that `index.html` is
-up-to-date with the data files — if it isn't, the PR check fails.
+All changes go through a pull request. CI automatically rebuilds `index.html`
+and commits it to your PR branch — no local build step required.
 
 **Workflow for contributors:**
 
 1. Edit files under `data/` (or `build.py`).
-2. Run `uv run build.py` to regenerate `index.html`.
-3. Commit both the data change and the updated `index.html`.
-4. Open a pull request — the CI will verify the HTML matches the data.
+2. Commit and push your changes.
+3. Open a pull request — CI will regenerate `index.html` and push a
+   `chore: rebuild index.html` commit to your branch automatically.
 
 ```bash
-# Edit your data file, then:
-uv run build.py
-git add data/team/your-name.md index.html
+git add data/team/your-name.md
 git commit -m "feat(team): update your-name profile"
 git push origin your-branch
 ```

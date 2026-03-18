@@ -7,23 +7,29 @@ on:
       - "data/**.md"
       - "assets/team/**"
       - "build.py"
-      - "index.html"
 
 jobs:
-  check:
+  build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
 
       - uses: astral-sh/setup-uv@v5
 
       - name: Regenerate index.html
         run: uv run build.py
 
-      - name: Verify index.html is up-to-date
+      - name: Commit updated index.html
         run: |
-          git diff --exit-code index.html || (
-            echo "index.html is out of date. Run 'python build.py' locally and include the result in your PR."
-            exit 1
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git diff --quiet index.html || (
+            git add index.html &&
+            git commit -m "chore: rebuild index.html [skip ci]" &&
+            git push
           )
