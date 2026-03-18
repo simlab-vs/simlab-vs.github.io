@@ -1,6 +1,7 @@
 ## Gregory Mermoud
 role: Director
 title: Prof. Dr.
+email: gregory.mermoud@hevs.ch
 website: https://gregorymermoud.ch
 interests: Hybrid Modeling, Differential Programming, Uncertainty Quantification, Dynamical Systems
 
