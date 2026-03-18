@@ -331,7 +331,7 @@
     /* ── Collaborators grid ── */
     .collab-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      grid-template-columns: 1fr;
       gap: 1.25rem;
       margin-top: 1.75rem;
     }
@@ -350,12 +350,12 @@
     .collab-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.07); }
 
     .collab-avatar {
-      width: 64px;
-      height: 64px;
+      width: 110px;
+      height: 110px;
       border-radius: 50%;
       background: linear-gradient(135deg, #2563eb, #7c3aed);
       color: #fff;
-      font-size: 1rem;
+      font-size: 1.4rem;
       font-weight: 700;
       display: flex;
       align-items: center;
@@ -364,8 +364,8 @@
     }
 
     .collab-photo {
-      width: 64px;
-      height: 64px;
+      width: 110px;
+      height: 110px;
       border-radius: 50%;
       object-fit: cover;
       flex-shrink: 0;
@@ -392,14 +392,16 @@
     .collab-subtitle {
       font-size: 0.8rem;
       color: var(--muted);
-      margin-bottom: 0.45rem;
+      margin-top: 0.4rem;
+      margin-bottom: 0.4rem;
     }
 
     .collab-interests {
       display: flex;
       flex-wrap: wrap;
       gap: 0.3rem;
-      margin-bottom: 0.6rem;
+      margin-top: 0.35rem;
+      margin-bottom: 0;
     }
 
     .interest-tag {
@@ -415,7 +417,28 @@
       font-size: 0.85rem;
       color: var(--muted);
       line-height: 1.6;
+      margin-top: 0.5rem;
+      margin-bottom: 0;
     }
+
+    .collab-bio-list {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0.5rem 0 0 1.1rem;
+      padding: 0;
+    }
+
+    .collab-bio-list li { margin-bottom: 0.2rem; }
+
+    .collab-bio a,
+    .collab-bio-list a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .collab-bio a:hover,
+    .collab-bio-list a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -547,7 +570,10 @@
           <div class="badges"><span class="badge" style="background:#dbeafe;color:#1d4ed8">Horizon</span><span class="badge badge-status ongoing">ongoing</span></div>
         </div>
         <div class="proj-meta"><span>2025–2028</span></div>
-        <p class="proj-desc">European research project investigating how large language models and AI agents can assist and automate software engineering tasks, from requirements analysis and code generation to testing and maintenance. SIMLab contributes expertise in hybrid modelling and uncertainty quantification for AI-assisted development pipelines.</p>
+        <p class="proj-desc">European research project investigating how large language models and AI agents can
+assist and automate software engineering tasks, from requirements analysis and code
+generation to testing and maintenance. SIMLab contributes expertise in hybrid modelling
+and uncertainty quantification for AI-assisted development pipelines.</p>
         <a class="proj-link" href="https://ai4sweng.eu/" target="_blank" rel="noopener">Project website →</a>
       </div>
       <div class="proj-card">
@@ -556,7 +582,10 @@
           <div class="badges"><span class="badge" style="background:#fef3c7;color:#92400e">Innosuisse</span><span class="badge badge-status ongoing">ongoing</span></div>
         </div>
         <div class="proj-meta"><span>2026–2027</span> · <span class="partners">Eskenazi SA</span></div>
-        <p class="proj-desc">Contrôle Autonome de la Précision des outils de coupe par Intelligence Artificielle. Innosuisse project with Eskenazi SA developing real-time machine-learning models for in-process monitoring and automatic correction of cutting-tool precision, reducing scrap rates and improving surface quality in high-precision machining.</p>
+        <p class="proj-desc">Contrôle Autonome de la Précision des outils de coupe par Intelligence Artificielle.
+Innosuisse project with Eskenazi SA developing real-time machine-learning models for
+in-process monitoring and automatic correction of cutting-tool precision, reducing scrap
+rates and improving surface quality in high-precision machining.</p>
         <a class="proj-link" href="https://www.eskenazi.ch" target="_blank" rel="noopener">Project website →</a>
       </div>
       <div class="proj-card">
@@ -565,7 +594,9 @@
           <div class="badges"><span class="badge" style="background:#f3f4f6;color:#374151">Etat du Valais</span><span class="badge badge-status ongoing">ongoing</span></div>
         </div>
         <div class="proj-meta"><span>2023–2025</span></div>
-        <p class="proj-desc">A JAX-based framework for 5-day groundwater level prediction from meteorological and weather forecast data. Uses differentiable hybrid models combining physics-based priors with data-driven components, enabling uncertainty-aware forecasts at regional scale.</p>
+        <p class="proj-desc">A JAX-based framework for 5-day groundwater level prediction from meteorological and
+weather forecast data. Uses differentiable hybrid models combining physics-based priors
+with data-driven components, enabling uncertainty-aware forecasts at regional scale.</p>
         <a class="proj-link" href="https://github.com/simlab-vs/jaxifer" target="_blank" rel="noopener">GitHub →</a>
       </div>
       <div class="proj-card">
@@ -574,7 +605,10 @@
           <div class="badges"><span class="badge" style="background:#f3e8ff;color:#6b21a8">HES-SO</span><span class="badge badge-status ongoing">ongoing</span></div>
         </div>
         <div class="proj-meta"><span>2026</span></div>
-        <p class="proj-desc">Domain-informed machine learning for the simulation of hydroelectric turbines. The project develops physics-constrained surrogate models that accurately replicate high-fidelity CFD simulations at a fraction of the computational cost, enabling rapid turbine optimisation and digital-twin applications for Swiss hydropower operators.</p>
+        <p class="proj-desc">Domain-informed machine learning for the simulation of hydroelectric turbines. The
+project develops physics-constrained surrogate models that accurately replicate
+high-fidelity CFD simulations at a fraction of the computational cost, enabling rapid
+turbine optimisation and digital-twin applications for Swiss hydropower operators.</p>
         
       </div>
       <div class="proj-card">
@@ -583,7 +617,11 @@
           <div class="badges"><span class="badge" style="background:#fef3c7;color:#92400e">Innosuisse</span><span class="badge badge-status ongoing">ongoing</span></div>
         </div>
         <div class="proj-meta"><span>2026–2027</span> · <span class="partners">Infomaniak</span></div>
-        <p class="proj-desc">Innosuisse project with Infomaniak developing a sovereign, open-source solution for automated spearphishing detection. The system combines large language models with behavioural analysis to identify highly targeted email attacks without relying on third-party cloud infrastructure, addressing privacy and data-sovereignty requirements for Swiss organisations.</p>
+        <p class="proj-desc">Innosuisse project with Infomaniak developing a sovereign, open-source solution for
+automated spearphishing detection. The system combines large language models with
+behavioural analysis to identify highly targeted email attacks without relying on
+third-party cloud infrastructure, addressing privacy and data-sovereignty requirements
+for Swiss organisations.</p>
         
       </div>
       <div class="proj-card">
@@ -592,7 +630,10 @@
           <div class="badges"><span class="badge" style="background:#d1fae5;color:#065f46">SNSF</span><span class="badge badge-status ongoing">ongoing</span></div>
         </div>
         <div class="proj-meta"><span>2026</span></div>
-        <p class="proj-desc">SNSF Spark project developing domain-informed system-dynamics models of tree growth and mortality under changing climatic conditions. Combines differentiable mechanistic representations of carbon allocation and hydraulic failure with observational data to produce interpretable, uncertainty-aware forecasts of forest dynamics.</p>
+        <p class="proj-desc">SNSF Spark project developing domain-informed system-dynamics models of tree growth and
+mortality under changing climatic conditions. Combines differentiable mechanistic
+representations of carbon allocation and hydraulic failure with observational data to
+produce interpretable, uncertainty-aware forecasts of forest dynamics.</p>
         <a class="proj-link" href="https://github.com/simlab-vs/trunx" target="_blank" rel="noopener">GitHub →</a>
       </div>
     </div>
@@ -608,8 +649,8 @@
         <div class="collab-avatar">GM</div>
         <div class="collab-body">
           <h3><a href="https://gregorymermoud.ch" target="_blank" rel="noopener">Prof. Dr. Gregory Mermoud</a></h3>
-          <div class="collab-subtitle">Director</div>
           <div class="collab-interests"><span class="interest-tag">Hybrid Modeling</span><span class="interest-tag">Differential Programming</span><span class="interest-tag">Uncertainty Quantification</span><span class="interest-tag">Dynamical Systems</span></div>
+          <div class="collab-subtitle">Director</div>
           <p class="collab-bio">Gregory Mermoud is a professor at HES-SO Valais-Wallis and director of SIMLab. His research focuses on the intersection of physics-based modeling and machine learning, with an emphasis on developing interpretable and uncertainty-aware models for real-world engineering problems.</p>
         </div>
       </div>
@@ -617,8 +658,8 @@
         <div class="collab-avatar">CT</div>
         <div class="collab-body">
           <h3><a href="https://cedrictravelletti.github.io/" target="_blank" rel="noopener">Dr. Cedric Travelletti</a></h3>
-          <div class="collab-subtitle">Senior Scientist</div>
           <div class="collab-interests"><span class="interest-tag">Gaussian Processes</span><span class="interest-tag">Spatial Statistics</span><span class="interest-tag">Inverse Problems</span><span class="interest-tag">Geosciences</span></div>
+          <div class="collab-subtitle">Senior Scientist</div>
           <p class="collab-bio">Cedric Travelletti is a senior scientist at SIMLab specialising in probabilistic machine learning and spatial statistics. His work addresses inverse problems in geosciences, with a focus on scalable Gaussian process methods and uncertainty quantification for large-scale environmental applications.</p>
         </div>
       </div>
@@ -626,8 +667,8 @@
         <div class="collab-avatar">GG</div>
         <div class="collab-body">
           <h3>Glory Givi</h3>
-          <div class="collab-subtitle">Postdoc</div>
           <div class="collab-interests"><span class="interest-tag">Machine Learning</span><span class="interest-tag">Explainable AI</span><span class="interest-tag">Scientific Computing</span></div>
+          <div class="collab-subtitle">Postdoc</div>
           
         </div>
       </div>
@@ -635,17 +676,23 @@
         <div class="collab-avatar">MG</div>
         <div class="collab-body">
           <h3><a href="https://gillioz.github.io/" target="_blank" rel="noopener">Dr. Marc Gillioz</a></h3>
-          <div class="collab-subtitle">Senior scientist</div>
           <div class="collab-interests"><span class="interest-tag">Deep Learning</span><span class="interest-tag">Time Series</span><span class="interest-tag">Industrial Applications</span></div>
-          <p class="collab-bio">Marc is currently working on projects related to hydroelectric power production, in particular applying data analysis and machine learning techniques to: - predict strain and fatigue for variable-speed turbines, - detect anomalies in operational data for better maintenance planning. At the HES-SO, Marc has also worked on problems related to power systems, such as power flow optimization through topological changes, modelling of hydroelectric production and high-voltage grids, and network reconstruction using Smart Meter data. Marc&#x27;s background is in high-energy physics, with a stint in software engineering.</p>
+          <div class="collab-subtitle">Senior scientist</div>
+          <p class="collab-bio">Marc is currently working on projects related to hydroelectric power production, in particular applying data analysis and machine learning techniques to:</p>
+<ul class="collab-bio-list">
+<li>predict strain and fatigue for variable-speed turbines,</li>
+<li>detect anomalies in operational data for better maintenance planning.</li>
+</ul>
+<p class="collab-bio">At the HES-SO, Marc has also worked on problems related to power systems, such as power flow optimization through topological changes, modelling of hydroelectric production and high-voltage grids, and network reconstruction using Smart Meter data.</p>
+<p class="collab-bio">Marc&#x27;s background is in high-energy physics, with a stint in software engineering.</p>
         </div>
       </div>
       <div class="collab-card">
         <div class="collab-avatar">AV</div>
         <div class="collab-body">
           <h3>Alexandre Veuthey</h3>
-          <div class="collab-subtitle">Research Engineer</div>
           <div class="collab-interests"><span class="interest-tag">Machine Learning</span><span class="interest-tag">Computer Vision</span></div>
+          <div class="collab-subtitle">Research Engineer</div>
           
         </div>
       </div>
@@ -653,8 +700,8 @@
         <div class="collab-avatar">MR</div>
         <div class="collab-body">
           <h3>Marta Rende</h3>
-          <div class="collab-subtitle">Assistant</div>
           
+          <div class="collab-subtitle">Assistant</div>
           
         </div>
       </div>
@@ -662,8 +709,8 @@
         <div class="collab-avatar">DO</div>
         <div class="collab-body">
           <h3><a href="https://dionosmani.vercel.app/" target="_blank" rel="noopener">Dion Osmani</a></h3>
-          <div class="collab-subtitle">Assistant</div>
           <div class="collab-interests"><span class="interest-tag">Dynamic Systems</span><span class="interest-tag">Optimization</span></div>
+          <div class="collab-subtitle">Assistant</div>
           
         </div>
       </div>

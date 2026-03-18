@@ -21,6 +21,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import html
 import re
 import sys
@@ -94,9 +95,7 @@ def _parse_entries(text: str) -> list[dict]:
         entries.append(current)
 
     for e in entries:
-        e["body"] = " ".join(
-            l.strip() for l in e.pop("_body_lines") if l.strip()
-        )
+        e["body"] = "\n".join(e.pop("_body_lines")).strip()
     return entries
 
 
@@ -218,21 +217,82 @@ def render_projects(projects: list[Project]) -> str:
     return "\n".join(cards)
 
 
+def _render_inline(text: str) -> str:
+    """Render inline markdown (links, bold) within an already-plaintext string."""
+    result = ""
+    last_end = 0
+    for m in re.finditer(r'\[([^\]]*)\]\(([^)]*)\)', text):
+        result += re.sub(r'\*\*([^*]+)\*\*', r'<strong>\1</strong>',
+                         html.escape(text[last_end:m.start()]))
+        result += (
+            f'<a href="{html.escape(m.group(2))}" target="_blank" rel="noopener">'
+            f'{html.escape(m.group(1))}</a>'
+        )
+        last_end = m.end()
+    result += re.sub(r'\*\*([^*]+)\*\*', r'<strong>\1</strong>',
+                     html.escape(text[last_end:]))
+    return result
+
+
+def _render_bio(text: str) -> str:
+    """Convert plain text / simple markdown (bullets, links, bold) to HTML."""
+    if not text.strip():
+        return ""
+    lines = text.splitlines()
+    parts: list[str] = []
+    in_list = False
+    para_lines: list[str] = []
+
+    def flush_para() -> None:
+        if para_lines:
+            parts.append(f'<p class="collab-bio">{_render_inline(" ".join(para_lines))}</p>')
+            para_lines.clear()
+
+    for line in lines:
+        stripped = line.strip()
+        is_bullet = stripped.startswith("- ") or stripped.startswith("* ")
+        if is_bullet:
+            flush_para()
+            if not in_list:
+                parts.append('<ul class="collab-bio-list">')
+                in_list = True
+            parts.append(f'<li>{_render_inline(stripped[2:])}</li>')
+        else:
+            if in_list:
+                parts.append("</ul>")
+                in_list = False
+            if stripped:
+                para_lines.append(stripped)
+            else:
+                flush_para()
+
+    if in_list:
+        parts.append("</ul>")
+    flush_para()
+    return "\n".join(parts)
+
+
 def render_collaborators(collaborators: list[Collaborator]) -> str:
     if not collaborators:
         return "<p>No collaborators found.</p>"
 
     cards = []
     for c in collaborators:
-        # Avatar: photo if available, otherwise coloured initials
+        # Avatar: explicit photo > Gravatar (if email) > coloured initials
+        initials = "".join(w[0].upper() for w in c.name.split()[:2])
         if c.picture:
-            initials = "".join(w[0].upper() for w in c.name.split()[:2])
             avatar = (
                 f'<img class="collab-photo" src="{html.escape(c.picture)}" '
                 f'alt="{html.escape(initials)}" />'
             )
+        elif c.email:
+            digest = hashlib.md5(c.email.strip().lower().encode()).hexdigest()
+            gravatar_url = f"https://www.gravatar.com/avatar/{digest}?s=200&d=mp"
+            avatar = (
+                f'<img class="collab-photo" src="{gravatar_url}" '
+                f'alt="{html.escape(initials)}" />'
+            )
         else:
-            initials = "".join(w[0].upper() for w in c.name.split()[:2])
             avatar = f'<div class="collab-avatar">{initials}</div>'
 
         display_name = f"{c.title} {c.name}".strip() if c.title else c.name
@@ -263,15 +323,15 @@ def render_collaborators(collaborators: list[Collaborator]) -> str:
         else:
             interests_html = ""
 
-        bio = f'<p class="collab-bio">{html.escape(c.bio)}</p>' if c.bio else ""
+        bio = _render_bio(c.bio)
 
         cards.append(f"""\
       <div class="collab-card">
         {avatar}
         <div class="collab-body">
           <h3>{name_tag}</h3>
-          {subtitle}
           {interests_html}
+          {subtitle}
           {bio}
         </div>
       </div>""")
