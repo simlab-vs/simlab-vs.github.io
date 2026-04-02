@@ -26,7 +26,7 @@
 
     /* ── Header ── */
     header {
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+      background: url('assets/banner.png') center/cover no-repeat;
       color: #fff;
       padding: 5rem 1.5rem 4rem;
       text-align: center;
@@ -53,11 +53,13 @@
 
     header h1 span { color: #60a5fa; }
 
-    header p.tagline {
+    p.tagline {
       font-size: 1.15rem;
-      color: #cbd5e1;
+      color: var(--accent-light);
       max-width: 600px;
-      margin: 0 auto 2rem;
+      margin: 0 auto;
+      text-align: center;
+      padding: 1.75rem 1.5rem 0;
     }
 
     header .affiliation {
@@ -452,9 +454,6 @@
   <p class="tagline">
     Developing and applying machine learning techniques to solve complex real-world problems.
   </p>
-  <div class="affiliation">
-    Part of <a href="https://www.hevs.ch" target="_blank" rel="noopener">HES-SO Valais</a>
-  </div>
 </header>
 
 <main>
