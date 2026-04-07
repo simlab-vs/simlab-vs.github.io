@@ -50,6 +50,7 @@ class Collaborator:
     title: str = ""
     affiliation: str = ""
     website: str = ""
+    portfolio: str = ""
     email: str = ""
     picture: str = ""
     interests: str = ""
@@ -60,7 +61,7 @@ class Collaborator:
 
 _KNOWN_FIELDS = {
     "funding", "period", "partners", "website", "github", "status",
-    "role", "title", "affiliation", "email", "picture", "interests",
+    "role", "title", "affiliation", "email", "picture", "interests", "portfolio",
 }
 
 def _parse_entries(text: str) -> list[dict]:
@@ -87,7 +88,7 @@ def _parse_entries(text: str) -> list[dict]:
         # Try key: value field
         m = re.match(r'^([a-zA-Z_]+)\s*:\s*(.*)$', line)
         if m and m.group(1).lower() in _KNOWN_FIELDS:
-            current[m.group(1).lower()] = m.group(2).strip()
+            current[m.group(1).lower()] = m.group(2).strip().strip("<>")
         else:
             current["_body_lines"].append(raw_line)
 
@@ -133,6 +134,7 @@ def parse_collaborators(source: Path) -> list[Collaborator]:
             title=e.get("title", ""),
             affiliation=e.get("affiliation", ""),
             website=e.get("website", ""),
+            portfolio=e.get("portfolio", ""),
             email=e.get("email", ""),
             picture=e.get("picture", ""),
             interests=e.get("interests", ""),
@@ -325,6 +327,22 @@ def render_collaborators(collaborators: list[Collaborator]) -> str:
 
         bio = _render_bio(c.bio)
 
+        links = []
+        if c.website:
+            links.append(
+                f'<a class="collab-link" href="{html.escape(c.website)}" '
+                f'target="_blank" rel="noopener">Website →</a>'
+            )
+        if c.portfolio:
+            links.append(
+                f'<a class="collab-link" href="{html.escape(c.portfolio)}" '
+                f'target="_blank" rel="noopener">Portfolio →</a>'
+            )
+        links_html = (
+            f'<div class="collab-links">{"&ensp;·&ensp;".join(links)}</div>'
+            if links else ""
+        )
+
         cards.append(f"""\
       <div class="collab-card">
         {avatar}
@@ -333,6 +351,7 @@ def render_collaborators(collaborators: list[Collaborator]) -> str:
           {interests_html}
           {subtitle}
           {bio}
+          {links_html}
         </div>
       </div>""")
 
