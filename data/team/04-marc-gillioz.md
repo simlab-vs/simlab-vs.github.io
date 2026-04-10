@@ -1,18 +1,11 @@
 ## Marc Gillioz
 role: Senior scientist
 title: Dr.
+email: marc.gillioz@hevs.ch
 website: https://gillioz.github.io/
-interests: Deep Learning, Time Series, Industrial Applications
+interests: Physics-Informed ML, Time Series, Industrial Applications
 
-Marc is currently working on projects related to hydroelectric power production,
-in particular applying data analysis and machine learning techniques to:
- - predict strain and fatigue for variable-speed turbines,
- - detect anomalies in operational data for better maintenance planning.
-
-At the HES-SO, Marc has also worked on problems related to power systems,
-such as power flow optimization through topological changes,
-modelling of hydroelectric production and high-voltage grids,
-and network reconstruction using Smart Meter data.
-
-Marc's background is in high-energy physics,
-with a stint in software engineering.
+Marc is a senior scientist applying machine learning solutions
+to problems that involve physics. His background is in high-energy physics,
+with a stint in software engineering. At the HES-SO, he has worked
+mainly on electrical grids and hydroelectric power production.
