@@ -1,7 +1,7 @@
 ## Marc Gillioz
 role: Senior scientist
 title: Dr.
-email: marc.gillioz@hevs.ch
+email: marc.gillioz@gmail.com
 website: https://gillioz.github.io/
 interests: Physics-Informed ML, Time Series, Industrial Applications
 
