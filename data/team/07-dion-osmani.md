@@ -1,5 +1,4 @@
 ## Dion Osmani
-role: Research Assistant
+role: Assistant
 website: https://dionosmani.vercel.app/
-email: dion.osmani@hevs.ch
-interests: Dynamical Systems, Optimization
+interests: Dynamic Systems, Optimization
