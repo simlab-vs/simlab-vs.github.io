@@ -342,6 +342,34 @@
 
     .collab-links { margin-top: 0.5rem; }
 
+    /* ── Alumni list ── */
+    .alumni-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem 1rem;
+      margin-top: 1.5rem;
+      padding: 0;
+      list-style: none;
+    }
+
+    .alumni-list li {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.45rem 1.1rem;
+      font-size: 0.9rem;
+    }
+
+    .alumni-list a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .alumni-list a:hover { color: var(--accent); text-decoration: underline; }
+
+    .alumni-list span { color: var(--text); font-weight: 600; }
+
     /* ── Collaborators grid ── */
     .collab-grid {
       display: grid;
@@ -717,16 +745,6 @@ produce interpretable, uncertainty-aware forecasts of forest dynamics.</p>
         </div>
       </div>
       <div class="collab-card">
-        <img class="collab-photo" src="https://www.gravatar.com/avatar/c086ad602e01d905dd4dea3c976604d6?s=200&d=mp" alt="DO" />
-        <div class="collab-body">
-          <h3><a href="https://dionosmani.vercel.app/" target="_blank" rel="noopener">Dion Osmani</a></h3>
-          <div class="collab-interests"><span class="interest-tag">Dynamical Systems</span><span class="interest-tag">Optimization</span></div>
-          <div class="collab-subtitle">Research Assistant</div>
-          
-          <div class="collab-links"><a class="collab-link" href="https://dionosmani.vercel.app/" target="_blank" rel="noopener">Website →</a></div>
-        </div>
-      </div>
-      <div class="collab-card">
         <img class="collab-photo" src="https://www.gravatar.com/avatar/ddc70699c7c2f1b05b3ea69ff0b10836?s=200&d=mp" alt="FR" />
         <div class="collab-body">
           <h3>Dr. Francesco Rubbo</h3>
@@ -749,6 +767,17 @@ produce interpretable, uncertainty-aware forecasts of forest dynamics.</p>
     </div>
   </section>
     <!-- END:collaborators -->
+
+    <!-- BEGIN:alumni -->
+  <section class="db-section" id="alumni">
+    <div class="section-label">People</div>
+    <h2>Alumni</h2>
+    <ul class="alumni-list">
+<li><a href="https://dionosmani.vercel.app/" target="_blank" rel="noopener">Dion Osmani</a></li>
+<li><a href="https://www.linkedin.com/in/hiten-goel-003599250/" target="_blank" rel="noopener">Hiten Goel</a></li>
+    </ul>
+  </section>
+    <!-- END:alumni -->
 
 </main>
 
