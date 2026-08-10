@@ -274,6 +274,23 @@ def _render_bio(text: str) -> str:
     return "\n".join(parts)
 
 
+def render_alumni(alumni: list[Collaborator]) -> str:
+    if not alumni:
+        return ""
+
+    items = []
+    for a in alumni:
+        if a.website:
+            items.append(
+                f'<li><a href="{html.escape(a.website)}" target="_blank" '
+                f'rel="noopener">{html.escape(a.name)}</a></li>'
+            )
+        else:
+            items.append(f'<li><span>{html.escape(a.name)}</span></li>')
+
+    return "\n".join(items)
+
+
 def render_collaborators(collaborators: list[Collaborator]) -> str:
     if not collaborators:
         return "<p>No collaborators found.</p>"
@@ -378,6 +395,15 @@ _COLLABORATORS_SECTION = """\
     </div>
   </section>"""
 
+_ALUMNI_SECTION = """\
+  <section class="db-section" id="alumni">
+    <div class="section-label">People</div>
+    <h2>Alumni</h2>
+    <ul class="alumni-list">
+{items}
+    </ul>
+  </section>"""
+
 
 def build_projects_html(projects: list[Project]) -> str:
     return _PROJECTS_SECTION.format(cards=render_projects(projects))
@@ -385,6 +411,12 @@ def build_projects_html(projects: list[Project]) -> str:
 
 def build_collaborators_html(collaborators: list[Collaborator]) -> str:
     return _COLLABORATORS_SECTION.format(cards=render_collaborators(collaborators))
+
+
+def build_alumni_html(alumni: list[Collaborator]) -> str:
+    if not alumni:
+        return ""
+    return _ALUMNI_SECTION.format(items=render_alumni(alumni))
 
 
 # ── Injection ─────────────────────────────────────────────────────────────────
@@ -432,17 +464,23 @@ def main() -> None:
         if not projects_source.exists():
             sys.exit(f"[build] Error: neither {data_dir / 'projects'} nor {data_dir / 'projects.md'} found")
 
-    collaborators = parse_collaborators(team_source)
+    all_collaborators = parse_collaborators(team_source)
     projects = parse_projects(projects_source)
+
+    alumni = [c for c in all_collaborators if c.role.lower() == "alumni"]
+    collaborators = [c for c in all_collaborators if c.role.lower() != "alumni"]
 
     proj_html = build_projects_html(projects)
     collab_html = build_collaborators_html(collaborators)
+    alumni_html = build_alumni_html(alumni)
 
     if args.check:
         print("── Projects ─────────────────────────────────")
         print(proj_html)
         print("\n── Collaborators ────────────────────────────")
         print(collab_html)
+        print("\n── Alumni ────────────────────────────────────")
+        print(alumni_html)
         return
 
     index = Path(args.output)
@@ -452,10 +490,12 @@ def main() -> None:
     text = index.read_text()
     text = inject(text, "projects", proj_html)
     text = inject(text, "collaborators", collab_html)
+    text = inject(text, "alumni", alumni_html)
     index.write_text(text)
 
-    print(f"[build] Wrote {len(projects)} project(s) and "
-          f"{len(collaborators)} collaborator(s) into {index}")
+    print(f"[build] Wrote {len(projects)} project(s), "
+          f"{len(collaborators)} collaborator(s), and "
+          f"{len(alumni)} alumnus/alumna(e) into {index}")
 
 
 if __name__ == "__main__":

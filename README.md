@@ -81,6 +81,10 @@ One or two sentences of bio.
 The `email` field drives the profile photo via [Gravatar](https://gravatar.com). If no
 email is set, a placeholder avatar is shown.
 
+**Alumni** — set `role: Alumni` to move someone out of the Team grid and into the
+simple "Alumni" list at the bottom of the People section (just their name, linked to
+`website` if set).
+
 ---
 
 ## Publishing your changes
