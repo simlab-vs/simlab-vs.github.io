@@ -1,7 +1,10 @@
 ## Cedric Travelletti
-role: Senior Scientist
+role: Principal Scientist
 title: Dr.
-website: https://cedrictravelletti.github.io/
-interests: Gaussian Processes, Spatial Statistics, Inverse Problems, Geosciences
+email: <cedric.travelletti@hevs.ch>
+website: <https://cedrictravelletti.github.io/>
+portfolio: <https://scholar.google.com/citations?user=zvkbeqYAAAAJ&hl=fr>
+interests: Bayesian Machine Learning, Physics-inspired ML, Uncertainty Quantification, Differentiable Programming
 
-Cedric Travelletti is a senior scientist at SIMLab specialising in probabilistic machine learning and spatial statistics. His work addresses inverse problems in geosciences, with a focus on scalable Gaussian process methods and uncertainty quantification for large-scale environmental applications.
+Cedric Travelletti is a principal scientist at SIMLab, leading applied machine learning projects for industrial applications. His research focuses 
+on Bayesian machine learning, bridging physics-based models with uncertainty quantification.
